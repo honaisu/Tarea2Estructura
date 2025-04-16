@@ -191,32 +191,37 @@ int main() {
   // Recuerda usar un mapa por criterio de búsqueda
 
   do {
-    mostrarMenuPrincipal();
-    printf("Ingrese su opción: ");
-    scanf(" %c", &opcion);
+    mostrarMenuPrincipal() ;
+    printf("Ingrese su opción: ") ;
+    scanf(" %c", &opcion) ;
 
     switch (opcion) {
-    case '1':
-      cargar_peliculas(pelis_byid, pelis_bygenres);
-      break;
-    case '2':
-      buscar_por_id(pelis_byid);
-      break;
-    case '3':
-      break;
-    case '4':
-      buscar_por_genero(pelis_bygenres);
-      break;
-    case '5':
-      break;
-    case '6':
-      break;
-    case '7':
-      break;
+    case '1': {
+        cargar_peliculas(pelis_byid, pelis_bygenres) ;
+        break ;
     }
-    presioneTeclaParaContinuar();
+    case '2': {
+        buscar_por_id(pelis_byid) ;
+        break ;
+    }
+    case '3': {
+        break ;
+    }
+    case '4':
+        buscar_por_genero(pelis_bygenres) ;
+        break ;
+    case '5': {
+        break ;
+    }
+    case '6': {
+        break ;
+    }
+    case '7': {
+        break ;
+    }
+    }
+    esperarEnter() ;
+  } while (opcion != '0') ;
 
-  } while (opcion != '8');
-
-  return 0;
+  return 0 ;
 }
