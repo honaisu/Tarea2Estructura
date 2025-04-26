@@ -6,20 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void leerOpcion(char* opcion) { sscanf(leerEntrada(), "%c", opcion) ; }
-
-void mostrarDatosArchivo(FILE* archivo) {
-    char** completo = leerLineaCSV(archivo, ',') ;
-    
-    while ((completo = leerLineaCSV(archivo, ',')) != NULL) {
-        for (int i = 0 ; completo[i] ; i++) {
-            printf("%s ", completo[i]) ;
-        }
-        printf("\n") ;
-        
-    }
-}
-
 void casosDeOpciones(char* o, Map* Ge, Map* Ar, Map* Te) {
     leerOpcion(o) ;
     switch (*o) {
@@ -51,15 +37,6 @@ void casosDeOpciones(char* o, Map* Ge, Map* Ar, Map* Te) {
     if (*o != '0') esperarEnter() ;
 }
 
-void limpiarMapas(Map* A, Map* B, Map* C) {
-    map_clean(A) ;
-    map_clean(B) ;
-    map_clean(C) ;
-    free(A) ;
-    free(B) ;
-    free(C) ;
-}
-
 void elegirOpciones() {
     char opcion ;
     Map* listaGeneros = map_create(is_equal_str) ;
@@ -68,11 +45,9 @@ void elegirOpciones() {
     //---//
     do {
         mostrarMenuPrincipal() ;
-        printf("Ingrese su opción: ") ;
         casosDeOpciones(&opcion, listaGeneros, listaArtistas, listaTempo) ;
     } while (opcion != '0') ;
     //---//
-    limpiarMapas(listaGeneros, listaArtistas, listaTempo) ;
     return ;
 }
 

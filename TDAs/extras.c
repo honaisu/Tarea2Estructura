@@ -50,18 +50,34 @@ char **leerLineaCSV(FILE *archivo, char separador) {
 
 //---//
 
-void limpiarPantalla() { system("cls") ; }
+void limpiarPantalla() {
+  #ifdef _WIN32
+    system("cls") ;
+  #else
+    system("clear") ;
+  #endif
+}
 
-void imprimirSeparador(const char* sep, const char* string) {
-    puts(sep) ;
-    puts(string) ;
-    puts(sep) ;
+void imprimirSeparador(const char* mensaje) {
+  int largo = strlen(mensaje) + 12 ;
+  int i ;
+  putchar('#') ;
+  for (i = 0 ; i < largo ; i++) {
+      putchar('=') ;
+  }
+  puts("#") ;
+  printf("       %s\n", mensaje) ;
+  putchar('#') ;
+  for (i = 0 ; i < largo ; i++) {
+      putchar('=') ;
+  }
+  putchar('#') ;
+  putchar('\n') ;
 }
 
 void mostrarMenuPrincipal() {
     limpiarPantalla() ;
-    imprimirSeparador("#========================#", "        SPOTIFIND") ;
-  
+    imprimirSeparador("SPOTIFIND") ;
     puts("(1). Cargar Canciones") ;
     puts("(2). Buscar por Género") ;
     puts("(3). Buscar por Artista") ;
@@ -74,64 +90,51 @@ void esperarEnter() {
     while (getchar() != '\n') ;
 }
 
-char* leerEntrada() {
-    char* buffer = (char*) malloc(200*sizeof(char)) ;
+void leerEntrada(char* string) {
+    char buffer[200] ;
     fgets(buffer, sizeof(buffer), stdin) ;
     buffer[strcspn(buffer, "\n")] = '\0' ;
-    return buffer ;
+    strcpy(string, buffer) ;
+}
+
+int is_equal_str(void *key1, void *key2) {
+  return strcmp((char *)key1, (char *)key2) == 0 ;
+}
+
+List *split_string(const char *str, const char *delim) {
+  List *result = list_create() ;
+  char *token = strtok((char *)str, delim) ;
+
+  while (token != NULL) {
+    // Eliminar espacios en blanco al inicio del token
+    while (*token == ' ') {
+      token++ ;
+    }
+    
+    // Eliminar espacios en blanco al final del token
+    char *end = token + strlen(token) - 1 ;
+    while (*end == ' ' && end > token) {
+      *end = '\0' ;
+      end-- ;
+    }
+
+    // Copiar el token en un nuevo string
+    char *new_token = strdup(token) ;
+
+    // Agregar el nuevo string a la lista
+    list_pushBack(result, new_token) ;
+
+    // Obtener el siguiente token
+    token = strtok(NULL, delim) ;
+  }
+
+  return result ;
 }
 
 
-/**
- * Compara dos claves de tipo string para determinar si son iguales.
- * Esta función se utiliza para inicializar mapas con claves de tipo string.
- *
- * @param key1 Primer puntero a la clave string.
- * @param key2 Segundo puntero a la clave string.
- * @return Retorna 1 si las claves son iguales, 0 de lo contrario.
- */
-int is_equal_str(void *key1, void *key2) {
-    return strcmp((char *)key1, (char *)key2) == 0;
-  }
-  
-  /**
-   * Compara dos claves de tipo entero para determinar si son iguales.
-   * Esta función se utiliza para inicializar mapas con claves de tipo entero.
-   *
-   * @param key1 Primer puntero a la clave entera.
-   * @param key2 Segundo puntero a la clave entera.
-   * @return Retorna 1 si las claves son iguales, 0 de lo contrario.
-   */
-  int is_equal_int(void *key1, void *key2) {
-    return *(int *)key1 == *(int *)key2; // Compara valores enteros directamente
-  }
-  
-  List *split_string(const char *str, const char *delim) {
-    List *result = list_create();
-    char *token = strtok((char *)str, delim);
-  
-    while (token != NULL) {
-      // Eliminar espacios en blanco al inicio del token
-      while (*token == ' ') {
-        token++;
-      }
-  
-      // Eliminar espacios en blanco al final del token
-      char *end = token + strlen(token) - 1;
-      while (*end == ' ' && end > token) {
-        *end = '\0';
-        end--;
-      }
-  
-      // Copiar el token en un nuevo string
-      char *new_token = strdup(token);
-  
-      // Agregar el nuevo string a la lista
-      list_pushBack(result, new_token);
-  
-      // Obtener el siguiente token
-      token = strtok(NULL, delim);
-    }
-  
-    return result;
-  }
+void leerOpcion(char* opcion) { 
+  printf("Ingrese su opción: ") ;
+  char buffer[200] ;
+  leerEntrada(buffer) ;
+  sscanf(buffer, "%c", opcion) ; 
+}
