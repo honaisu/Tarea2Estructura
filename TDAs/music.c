@@ -58,16 +58,37 @@ void agregarAlMapa(Map* mapa, char* key, Song* cancion) {
 
 char verificar_cargado = '0' ;
 
-void cargarCanciones(const char** lineaCSV, Map* Mapa) ;
+void cargarCanciones(char** lineaCSV, Map* Mapa) {
+  //---//
+  Song* Cancion = guardarDatos(lineaCSV) ;
+  if (Cancion == NULL) { perror("NO SE PUEDEN AGREGAR MAS CANCIONES:") ; return ; }
+  //---//
+  MapPair* pair = map_search(Mapa, "Genero") ;
+  //--- LISTA GENEROS ---//
+  agregarAlMapa(pair->value, Cancion->track_genre, Cancion) ;
+  
+  //--- LISTA ARTISTAS ---//
+  pair = map_search(Mapa, "Artistas") ;
+  char* artista = list_first(Cancion->artists) ;
+  while (artista != NULL) {
+    agregarAlMapa(pair->value, artista, Cancion) ;
+    artista = list_next(Cancion->artists) ;
+  }
 
-void music_cargar(Map* cancionesGenero, Map* cancionesArtistas, Map* cancionesTempo) {
+  //--- LISTA TEMPO ---//
+  pair = map_search(Mapa, "Tempo") ;
+  agregarAlMapa(pair->value, Cancion->categoriaTempo, Cancion) ;
+}
+
+void music_cargar(Map* MapaCanciones) {
   if (verificar_cargado == '1') { puts("YA SE CARGARON LAS CANCIONES!") ; return ; }
   limpiarPantalla() ;
   //---//
   imprimirSeparador("Se cargarán las primeras 10.000 canciones. ¿Desea seguir? [SI/NO]") ;
-  char* opcion ;
+  char opcion[10] ;
   leerOpcion(opcion) ;
-  if (*opcion == 'N') return ;
+  if (*opcion == '\0') puts("Introduzca una opción válida.") ;
+  else if (*opcion != 'S' && *opcion != 's') return ;
   limpiarPantalla() ;
   imprimirSeparador("Cargando canciones...") ;
   //---//
@@ -76,38 +97,27 @@ void music_cargar(Map* cancionesGenero, Map* cancionesArtistas, Map* cancionesTe
   //---//
   char** completo = leerLineaCSV(archivoCSV, ',') ;
   while (i < 10000 && (completo = leerLineaCSV(archivoCSV, ',')) != NULL) {
-    //---//
-    Song* Cancion = guardarDatos(completo) ;
-    if (Cancion == NULL) { perror("NO SE PUEDEN AGREGAR MAS CANCIONES:") ; return ; }
-    //---//
-
-    //--- LISTA GENEROS ---//
-    agregarAlMapa(cancionesGenero, Cancion->track_genre, Cancion) ;
-    
-    //--- LISTA ARTISTAS ---//
-    char* artista = list_first(Cancion->artists) ;
-    while (artista != NULL) {
-      agregarAlMapa(cancionesArtistas, artista, Cancion) ;
-      artista = list_next(Cancion->artists) ;
-    }
-
-    //--- LISTA TEMPO ---//
-    agregarAlMapa(cancionesTempo, Cancion->categoriaTempo, Cancion) ;
+    cargarCanciones(completo, MapaCanciones) ;
     i++ ;
   }
   //---//
   if (i == 10000) {
     verificar_cargado = '1' ;
+    //---//
     puts("SE CARGARON LAS PRIMERAS 10.000 CANCIONES.") ;
     esperarEnter() ;
     limpiarPantalla() ;
     imprimirSeparador("¿Desea leer todas las canciones disponibles? [S/N]") ;
-    puts("Cargará todas las canciones disponibles y podrá trabajar con ellas.") ;
+    puts("Si acepta, cargará todas las canciones disponibles (puede tardar un rato).") ;
     puts("Si no, estarán cargadas las primeras 10.000 canciones.") ;
+    //---//
     leerOpcion(opcion) ;
-    if (*opcion == 'N') return ;
+    if (*opcion != 'S' && *opcion != 's') return ;
 
-    puts("SE HAN CARGADO TODAS LAS CANCIONES DISPONIBLES.");
+    while ((completo = leerLineaCSV(archivoCSV, ',')) != NULL) cargarCanciones(completo, MapaCanciones) ;
+    //---//
+    limpiarPantalla() ;
+    imprimirSeparador("SE HAN CARGADO TODAS LAS CANCIONES DISPONIBLES.") ;
   }
   //---//
   fclose(archivoCSV) ;
@@ -115,6 +125,7 @@ void music_cargar(Map* cancionesGenero, Map* cancionesArtistas, Map* cancionesTe
 }
 
 void imprimirDatosCanciones(Song* cancion) {
+  puts("") ;
   printf("ID: %s %40s", cancion->id, "Artistas(s): [") ;
   //--- IMPRIMIR ARTISTAS ---//
   char* artistas = list_first(cancion->artists) ;
@@ -129,8 +140,7 @@ void imprimirDatosCanciones(Song* cancion) {
   printf("Nombre: \"%s\"\n", cancion->track_name) ;
   printf("Album : \"%s\"\n", cancion->album_name) ;
   printf("Genero: \"%s\"\n", cancion->track_genre) ;
-  printf("Tempo : %.2f\n", cancion->tempo) ;
-  puts("============================") ;
+  printf("Tempo : %.2f (%s) \n", cancion->tempo, cancion->categoriaTempo) ;
 }
 
 char es_tempo ;
@@ -139,6 +149,7 @@ MapPair* devolverPairFiltro(Map* Mapa) {
   //---//
   MapPair* pair ;
   char filtro[200] ;
+  printf("Ingrese su opción: ") ;
   leerEntrada(filtro) ;
   //---//
   if (es_tempo == '1') {
@@ -150,24 +161,51 @@ MapPair* devolverPairFiltro(Map* Mapa) {
   return map_search(Mapa, filtro) ;
 }
 
-void music_buscarPorFiltro(Map* Mapa) {
+void music_buscarPorFiltro(Map* Mapa, const char* str) {
   if (verificar_cargado == '0') { puts("NO HAY CANCIONES CARGADAS.") ; return ; }
   limpiarPantalla() ;
+  imprimirSeparador(str) ;
   MapPair* pair = devolverPairFiltro(Mapa) ;
   if (pair == NULL) { puts("NO SE ENCONTRÓ EL DATO A BUSCAR") ; return ; }
   //---//
+  int contadorCanciones = 0 ;
+  char opcion[10] ;
   Song* cancion = list_first(pair->value) ;
   while (cancion != NULL) {
     imprimirDatosCanciones(cancion) ;
+
+    if (contadorCanciones == 10 && cancion != NULL) {
+      putchar('\n') ;
+      imprimirSeparador("¿Desea ver más canciones? [S/N]") ;
+      leerOpcion(opcion) ;
+      if (*opcion == 'S' || *opcion == 's') contadorCanciones = 0 ;
+      else break ;
+    }
+
+    contadorCanciones++ ;
     cancion = list_next(pair->value) ;
   }
   //---//
+  if (cancion == NULL) {
+    putchar('\n') ;
+    imprimirSeparador("¡Llegó al final de la lista!") ;
+  }
+
   es_tempo = '0' ;
-  free(pair) ;
 }
 
-void music_buscarPorGenero(Map* G) { music_buscarPorFiltro(G) ; }
+void music_buscarPorGenero(Map* Mapa) {
+  MapPair* pair = map_search(Mapa, "Genero") ; 
+  music_buscarPorFiltro(pair->value, "Ingrese el género a buscar:") ;
+}
 
-void music_buscarPorArtista(Map* A) { music_buscarPorFiltro(A) ; }
+void music_buscarPorArtista(Map* Mapa) { 
+  MapPair* pair = map_search(Mapa, "Artistas") ; 
+  music_buscarPorFiltro(pair->value, "Ingrese el artista a buscar:") ; 
+}
 
-void music_buscarPorTempo(Map* T) { es_tempo = '1' ; music_buscarPorFiltro(T) ; }
+void music_buscarPorTempo(Map* Mapa) { 
+  es_tempo = '1' ; 
+  MapPair* pair = map_search(Mapa, "Tempo") ; 
+  music_buscarPorFiltro(pair->value, "Ingrese la velocidad (tempo) a buscar") ; 
+}

@@ -14,7 +14,7 @@ typedef struct {
 } Song ;
 
 // Carga un archivo CSV. Se ingresa una ruta del archivo CSV, y la aplicación carga los datos de ahí.
-void music_cargar(Map*, Map*, Map*) ;
+void music_cargar(Map*) ;
 // Se pide buscar un género en específico, y se muestran todos los resultados con ese género.
 void music_buscarPorGenero(Map*) ;
 // Se pide buscar un artista. Muestra todas las canciones de un artista.

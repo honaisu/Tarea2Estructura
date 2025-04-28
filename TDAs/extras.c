@@ -47,6 +47,39 @@ char **leerLineaCSV(FILE *archivo, char separador) {
     return campos ;
 }
 
+int is_equal_str(void *key1, void *key2) {
+  return strcmp((char *)key1, (char *)key2) == 0 ;
+}
+
+List *split_string(const char *str, const char *delim) {
+  List *result = list_create() ;
+  char *token = strtok((char *)str, delim) ;
+
+  while (token != NULL) {
+    // Eliminar espacios en blanco al inicio del token
+    while (*token == ' ') {
+      token++ ;
+    }
+    
+    // Eliminar espacios en blanco al final del token
+    char *end = token + strlen(token) - 1 ;
+    while (*end == ' ' && end > token) {
+      *end = '\0' ;
+      end-- ;
+    }
+
+    // Copiar el token en un nuevo string
+    char *new_token = strdup(token) ;
+
+    // Agregar el nuevo string a la lista
+    list_pushBack(result, new_token) ;
+
+    // Obtener el siguiente token
+    token = strtok(NULL, delim) ;
+  }
+
+  return result ;
+}
 
 //---//
 
@@ -83,6 +116,7 @@ void mostrarMenuPrincipal() {
     puts("(3). Buscar por Artista") ;
     puts("(4). Buscar por Tempo") ;
     puts("(0). Salir") ;
+    putchar('\n') ;
 }
 
 void esperarEnter() {
@@ -97,42 +131,8 @@ void leerEntrada(char* string) {
     strcpy(string, buffer) ;
 }
 
-int is_equal_str(void *key1, void *key2) {
-  return strcmp((char *)key1, (char *)key2) == 0 ;
-}
-
-List *split_string(const char *str, const char *delim) {
-  List *result = list_create() ;
-  char *token = strtok((char *)str, delim) ;
-
-  while (token != NULL) {
-    // Eliminar espacios en blanco al inicio del token
-    while (*token == ' ') {
-      token++ ;
-    }
-    
-    // Eliminar espacios en blanco al final del token
-    char *end = token + strlen(token) - 1 ;
-    while (*end == ' ' && end > token) {
-      *end = '\0' ;
-      end-- ;
-    }
-
-    // Copiar el token en un nuevo string
-    char *new_token = strdup(token) ;
-
-    // Agregar el nuevo string a la lista
-    list_pushBack(result, new_token) ;
-
-    // Obtener el siguiente token
-    token = strtok(NULL, delim) ;
-  }
-
-  return result ;
-}
-
-
 void leerOpcion(char* opcion) { 
+  *opcion = '\0' ;
   printf("Ingrese su opción: ") ;
   char buffer[200] ;
   leerEntrada(buffer) ;
