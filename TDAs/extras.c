@@ -116,7 +116,6 @@ void mostrarMenuPrincipal() {
     puts("(3). Buscar por Artista") ;
     puts("(4). Buscar por Tempo") ;
     puts("(0). Salir") ;
-    putchar('\n') ;
 }
 
 void esperarEnter() {

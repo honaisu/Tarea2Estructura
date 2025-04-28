@@ -80,19 +80,37 @@ void cargarCanciones(char** lineaCSV, Map* Mapa) {
   agregarAlMapa(pair->value, Cancion->categoriaTempo, Cancion) ;
 }
 
+void imprimirGato() {
+  puts(" \\    /\\               |\'/-..--.") ;
+  puts("  )  ( ')             / _ _   ,  ;")  ;
+  puts(" (  /  )             `~=`Y'~_<._./")  ;
+  puts("  \\(__)|             <`-....__.'")  ;
+}
+
 void music_cargar(Map* MapaCanciones) {
   if (verificar_cargado == '1') { puts("YA SE CARGARON LAS CANCIONES!") ; return ; }
   limpiarPantalla() ;
+  char buffer[100] ;
+  imprimirSeparador("Por favor, ingrese la ruta donde se ubica el archivo de canciones:") ;
+  puts("Si trabaja con el repositorio, puede usar la ruta \"Data/song_dataset_.csv\"\n") ;
+  printf("Ingrese la ruta del archivo con canciones, sin comillas: ") ;
+  leerEntrada(buffer) ;
+  if (*buffer == '\0') {
+    puts("No se pudo leer su dirección") ;
+    return ;
+  }
   //---//
+  limpiarPantalla() ;
   imprimirSeparador("Se cargarán las primeras 10.000 canciones. ¿Desea seguir? [SI/NO]") ;
   char opcion[10] ;
   leerOpcion(opcion) ;
   if (*opcion == '\0') puts("Introduzca una opción válida.") ;
-  else if (*opcion != 'S' && *opcion != 's') return ;
+  else if ((*opcion != 'S' && *opcion == 's') || *opcion == '0') return ;
   limpiarPantalla() ;
   imprimirSeparador("Cargando canciones...") ;
+  imprimirGato() ;
   //---//
-  FILE* archivoCSV = fopen("Data/song_dataset_.csv", "r") ;
+  FILE* archivoCSV = fopen(buffer, "r") ;
   int i = 0 ;
   //---//
   char** completo = leerLineaCSV(archivoCSV, ',') ;
