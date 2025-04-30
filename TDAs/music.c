@@ -163,7 +163,7 @@ void imprimirDatosCanciones(Song* cancion) {
   printf("Nombre: \"%s\"\n", cancion->track_name) ;
   printf("Album : \"%s\"\n", cancion->album_name) ;
   printf("Genero: \"%s\"\n", cancion->track_genre) ;
-  printf("Tempo : %.2f (%s) \n", cancion->tempo, cancion->categoriaTempo) ;
+  printf("Tempo : %.2f BPM (%s) \n", cancion->tempo, cancion->categoriaTempo) ;
 }
 
 char es_tempo ;

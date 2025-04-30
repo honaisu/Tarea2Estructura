@@ -3,9 +3,12 @@
 ### Descripción
 
 ### Funciones del programa
-El programa incluye **4 funciones principales** con las que opera.
-1. `Cargar Canciones`: Permite que el usuario ingrese una ruta (``"C:/..."``, ``"\home\..."``) dentro del programa que contenga el archivo de canciones a utilizar (el proporcionado). Da la opción de ingresar la ruta proporcionada por el repositorio, pero permite elegir **cualquier ruta y nombre** en el archivo.
-2. `Buscar por Género`:
+El programa incluye **2 funciones principales** con las que opera.
+1. `Cargar Canciones`: Permite que el usuario ingrese una ruta (``"C:/..."``, ``"\home\..."``) dentro del programa que contenga el archivo de canciones a utilizar (el proporcionado) en formato CSV. Da la opción de ingresar la ruta proporcionada por el repositorio, pero permite elegir **cualquier ruta y nombre** en el archivo (mientras sea válido).
+2. `Buscar por "filtro"`: El programa permite la búsqueda de ciertos tipos de datos específicos ubicados dentro del archivo de canciones, retornando una lista de diez canciones por *default*, y dando la posibilidad de ir cargando más canciones hasta poder llegar al final de la lista. El formato de las canciones siempre mostrará el **ID**, **Artistas involucrados**, y **Nombre**, **Álbum** y **Velocidad (Tempo)** de la canción. Se otorgan las siguientes búsquedas dentro del programa, siendo:
+    - `Buscar por Género`: Permite ingresar **un género a buscar** (en minúsculas). Tomará todas las canciones con ese género aplicado y lo mostrará en pantalla. Algunos ejemplos son: `acoustic`, `anime` o `brazil`.
+    - `Buscar por Artista`: Permite ingresar el **artista que se desea buscar**. Encontrará y mostrará todas las canciones en las que ese artista haya estado involucrado. Algunos ejemplos son: `Kurt Cobain`.
+    - `Buscar por Tempo`: Permite ingresar un tempo (velocidad), catalogada en ciertos rangos que definirán las canciones que se buscarán. Los tempos que sean **menores a 80 BPM** serán catalogados como **lentos**; los que **estén entre 80 BPM y 120 BPM** serán **moderados**; y si son **mayores a 120 BPM** serán **rápidos**. Sólo se necesita ingresar la velocidad para la búsqueda, **sin los BPM**.
 
 #### Problemas y errores
 
