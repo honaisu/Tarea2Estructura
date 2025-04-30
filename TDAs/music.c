@@ -20,7 +20,7 @@ void convertir(const float tempo, char* key) {
 Song* guardarDatos(char** completo) {
   Song* nuevaCancion = (Song*) malloc(sizeof(Song)) ; 
   if (nuevaCancion == NULL) return NULL ;
-  // Identificador
+  // Identificador (ID)
   strcpy(nuevaCancion->id, completo[0]) ;
   // Artistas
   nuevaCancion->artists = split_string(completo[2], ";") ; 
@@ -61,7 +61,7 @@ char verificar_cargado = '0' ;
 void cargarCanciones(char** lineaCSV, Map* Mapa) {
   //---//
   Song* Cancion = guardarDatos(lineaCSV) ;
-  if (Cancion == NULL) { perror("NO SE PUEDEN AGREGAR MAS CANCIONES:") ; return ; }
+  if (Cancion == NULL) { perror("NO SE PUEDEN AGREGAR MAS CANCIONES") ; return ; }
   //---//
   MapPair* pair = map_search(Mapa, "Genero") ;
   //--- LISTA GENEROS ---//
@@ -89,28 +89,27 @@ void imprimirGato() {
 
 void music_cargar(Map* MapaCanciones) {
   if (verificar_cargado == '1') { puts("YA SE CARGARON LAS CANCIONES!") ; return ; }
+  //---//
   limpiarPantalla() ;
-  char buffer[100] ;
   imprimirSeparador("Por favor, ingrese la ruta donde se ubica el archivo de canciones:") ;
   puts("Si trabaja con el repositorio, puede usar la ruta \"Data/song_dataset_.csv\"\n") ;
   printf("Ingrese la ruta del archivo con canciones, sin comillas: ") ;
+  //---//
+  char buffer[100] ;
   leerEntrada(buffer) ;
-  if (*buffer == '\0') {
-    puts("No se pudo leer su dirección") ;
-    return ;
-  }
+  FILE* archivoCSV = fopen(buffer, "r") ;
+  if (archivoCSV == NULL) { perror("La ruta proporcionada no es válida") ; return ; }
   //---//
   limpiarPantalla() ;
   imprimirSeparador("Se cargarán las primeras 10.000 canciones. ¿Desea seguir? [SI/NO]") ;
-  char opcion[10] ;
-  leerOpcion(opcion) ;
-  if (*opcion == '\0') puts("Introduzca una opción válida.") ;
-  else if ((*opcion != 'S' && *opcion == 's') || *opcion == '0') return ;
+  leerOpcion(buffer) ;
+  if (*buffer == '\0') puts("Introduzca una opción válida.") ;
+  else if ((*buffer != 'S' && *buffer != 's') || *buffer == '0') return ;
   limpiarPantalla() ;
   imprimirSeparador("Cargando canciones...") ;
   imprimirGato() ;
   //---//
-  FILE* archivoCSV = fopen(buffer, "r") ;
+  
   int i = 0 ;
   //---//
   char** completo = leerLineaCSV(archivoCSV, ',') ;
@@ -129,8 +128,14 @@ void music_cargar(Map* MapaCanciones) {
     puts("Si acepta, cargará todas las canciones disponibles (puede tardar un rato).") ;
     puts("Si no, estarán cargadas las primeras 10.000 canciones.") ;
     //---//
-    leerOpcion(opcion) ;
-    if (*opcion != 'S' && *opcion != 's') return ;
+    leerOpcion(buffer) ;
+    limpiarPantalla() ;
+    if ((*buffer != 'S' && *buffer != 's') || *buffer == '0') { 
+      imprimirSeparador("¡Se han cargado las primeras 10.000 canciones!") ;
+      return ;
+    }
+    imprimirSeparador("Cargando canciones...") ;
+    imprimirGato() ;
 
     while ((completo = leerLineaCSV(archivoCSV, ',')) != NULL) cargarCanciones(completo, MapaCanciones) ;
     //---//
