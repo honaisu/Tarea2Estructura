@@ -1,6 +1,7 @@
 # **Spotifind**
 ---
 ### Descripción
+**Spotifind** es una herramienta que permite **cargar una base de datos** de canciones, a partir de una ruta especificada por el usuario, y **mostrar los datos de las canciones**, ubicadas dentro, a través de una **búsqueda por filtros** (`Género`, `Artista` y `Tempo`).
 
 ### Funciones del programa
 El programa incluye **2 funciones principales** con las que opera.

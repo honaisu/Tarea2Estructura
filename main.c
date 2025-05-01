@@ -5,17 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-void casosDeOpciones(char* o, Map* Mapa) {
+void casosDeOpciones(char* o, Map* mapa) {
     leerOpcion(o) ;
     switch (*o) {
         // Cargar Canciones en CSV
-        case '1': { music_cargar(Mapa) ; break ; }
+        case '1': { music_cargar(mapa) ; break ; }
         // Buscar por Género
-        case '2': { music_buscarPorGenero(Mapa) ; break ; }
+        case '2': { music_buscarPorGenero(mapa) ; break ; }
         // Buscar por Artista
-        case '3': { music_buscarPorArtista(Mapa) ; break ; }
+        case '3': { music_buscarPorArtista(mapa) ; break ; }
         // Buscar por Tempo
-        case '4': { music_buscarPorTempo(Mapa) ; break ; }
+        case '4': { music_buscarPorTempo(mapa) ; break ; }
         // Cuando se sale del programa
         case '0': { puts("Saliendo del programa...") ; break ; }
         // Cuando no hay dato ingresado
@@ -26,11 +26,34 @@ void casosDeOpciones(char* o, Map* Mapa) {
     if (*o != '0') esperarEnter() ;
 }
 
-void limpiarMapas() { }
+// Limpia el Mapa con valores de Mapa (Mapa de Mapas)
+void limpiarMapas(Map* mapa) { 
+    // Encuentra el primer valor asignado en el mapa (Mapa)
+    MapPair* pair = map_first(mapa) ;
+    while (pair != NULL) {
+        // Limpia los datos del mapa
+        map_clean(pair->value) ;
+        // Libera la memoria del mapa
+        free(pair->value) ;
+        // Le asigna NULL para no acceder a una dirección distinta
+        pair->value = NULL ;
+        // Libera la memoria de la llave (clave)
+        free(pair->key) ;
+        // Le asigna NULL para no acceder a una dirección distinta
+        pair->key = NULL ;
+        // Se mueve al siguiente valor asignado
+        pair = map_next(mapa) ;
+    }
+    // Limpia los datos del mapa
+    map_clean(mapa) ;
+    // Libera la memoria asignada del mapa
+    free(mapa) ;
+}
 
-void guardarMapa(Map* Mapa, char* key) {
+// Guarda un mapa con una llave dentro de otro mapa
+void guardarMapa(Map* mapa, char* key) {
     Map* lista = map_create(is_equal_str) ;
-    map_insert(Mapa, key, lista) ;
+    map_insert(mapa, key, lista) ;
 }
 
 void elegirOpciones() {
@@ -45,7 +68,7 @@ void elegirOpciones() {
         casosDeOpciones(&opcion, MapaCanciones) ;
     } while (opcion != '0') ;
     //---//
-    limpiarMapas() ;
+    limpiarMapas(MapaCanciones) ;
     return ;
 }
 
