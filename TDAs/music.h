@@ -3,17 +3,19 @@
 #include "list.h"
 #include "map.h"
 
+// Estructura Song
+// Guarda todos los datos correspondientes a una canción.
 typedef struct {
-    char id[100] ;
-    List* artists ;
-    char album_name[200] ;
-    char track_name[200] ;
-    char track_genre[100] ;
-    char categoriaTempo[10] ;
-    float tempo ;
+    char id[100]    ; // ID.
+    List* artists   ; // Lista de Artistas.
+    char album_name[200]    ; // Nombre de Álbum.
+    char track_name[200]    ; // Nombre de la canción.
+    char track_genre[100]   ; // Género de la canción.
+    char categoriaTempo[10] ; // Categoría del tempo (Lento, Moderado o Rápido).
+    float tempo ; // Tempo de la canción.
 } Song ;
 
-// Carga un archivo CSV. Se ingresa una ruta del archivo CSV, y la aplicación carga los datos de ahí.
+// Carga un archivo CSV. Se ingresa una ruta del archivo CSV, y la aplicación carga los datos de ahí para asignarlos a distintos mapas.
 void music_cargar(Map*) ;
 // Se pide buscar un género en específico, y se muestran todos los resultados con ese género.
 void music_buscarPorGenero(Map*) ;

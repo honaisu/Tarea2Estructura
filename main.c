@@ -35,12 +35,8 @@ void limpiarMapas(Map* mapa) {
         map_clean(pair->value) ;
         // Libera la memoria del mapa
         free(pair->value) ;
-        // Le asigna NULL para no acceder a una dirección distinta
-        pair->value = NULL ;
         // Libera la memoria de la llave (clave)
         free(pair->key) ;
-        // Le asigna NULL para no acceder a una dirección distinta
-        pair->key = NULL ;
         // Se mueve al siguiente valor asignado
         pair = map_next(mapa) ;
     }
@@ -50,7 +46,7 @@ void limpiarMapas(Map* mapa) {
     free(mapa) ;
 }
 
-// Guarda un mapa con una llave dentro de otro mapa
+// Guarda un mapa con una llave, dentro de otro mapa
 void guardarMapa(Map* mapa, char* key) {
     Map* lista = map_create(is_equal_str) ;
     map_insert(mapa, key, lista) ;

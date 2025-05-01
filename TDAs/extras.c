@@ -84,6 +84,7 @@ List *split_string(const char *str, const char *delim) {
 //---//
 
 void limpiarPantalla() {
+  // Verifica si es que el OS es Windows o "UNIX" (Linux/MacOS)
   #ifdef _WIN32
     system("cls") ;
   #else
@@ -131,6 +132,8 @@ void leerEntrada(char* string) {
 }
 
 void leerOpcion(char* opcion) { 
+  // Asigna el puntero (primer valor) al valor final de una cadena (\0).
+  // En caso de que el usuario no ingrese nada.
   *opcion = '\0' ;
   printf("Ingrese su opción: ") ;
   char buffer[200] ;
