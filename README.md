@@ -3,6 +3,24 @@
 ### Descripción
 **Spotifind** es una herramienta que permite **cargar una base de datos** de canciones, a partir de una ruta especificada por el usuario, y **mostrar los datos de las canciones**, ubicadas dentro, a través de una **búsqueda por filtros** (`Género`, `Artista` y `Tempo`).
 
+### Compilación y ejecución
+
+Para compilarlo, dentro del sistema operativo **Windows**, es necesario:
+1. Descargar este **repositorio** como archivo `zip` (haciendo **click** en la sección `code`, y apretando el botón de `Descargar ZIP`).
+2. Abrir el **explorador de archivos** y navegar hasta el archivo `zip` para descomprimirlo. Una vez descomprimido, abrir el directorio con los archivos del programa.
+3. Abrir el archivo `main.c` del `zip` en **Visual Studio Code**.
+4. Dentro de **Visual Studio Code**, abrir el **terminal** y dirigirse a la dirección del repositorio, para poder compilar el programa.
+5. Ejecutar el siguiente comando: `gcc TDAs/*.c *.c -o programa.exe`.
+6. Abrir el archivo `programa.exe`, o escribir la línea `./programa.exe` en **Visual Studio Code** para ejecutarlo.
+
+Una forma alternativa de compilación, dentro de **Windows**, sería:
+1. Descargar el **repositorio** como archivo `zip`.
+2. Abrir el **explorador de archivos** y navegar hasta encontrar el archivo `zip` para descomprimirlo.
+3. En **Windows 11**, una vez descomprimido, hacer **click derecho** en el directorio para abrir el menú de opciones y seleccionar para **abrir en Terminal**. Alternativamente, abrir **PowerShell** o **Línea de Comandos**, copiar la dirección del repositorio (la ruta `C:\Users\...`) y ejecutar el comando `cd "C:\Users\..."`.
+4. Ejecutar el comando: `gcc TDAs/*.c *.c -o programa.exe`.
+5. Abrir el archivo `programa.exe` o escribir en la misma **terminal** el comando `./programa.exe` para ejecutarlo (si lo permite).
+
+
 ### Funciones del programa
 El programa incluye **2 funciones principales** con las que opera.
 1. `Cargar Canciones`: Permite que el usuario ingrese una ruta (``"C:/..."``, ``"\home\..."``) dentro del programa que contenga el archivo de canciones a utilizar (el proporcionado) en formato CSV. Da la opción de ingresar la ruta proporcionada por el repositorio, pero permite elegir **cualquier ruta y nombre** en el archivo (mientras sea válido).
