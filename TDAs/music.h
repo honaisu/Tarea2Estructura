@@ -3,7 +3,7 @@
 #include "list.h"
 #include "map.h"
 
-// Estructura Song
+// Estructura de una Canción
 // Guarda todos los datos correspondientes a una canción.
 typedef struct {
     char id[100]    ; // ID.

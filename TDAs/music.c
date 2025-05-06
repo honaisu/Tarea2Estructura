@@ -6,6 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Variable global que verifica si es que se han cargado las canciones
+char verificar_cargado = '0' ;
+
+// Variable global encargada de verificar si es que, al buscar por filtro, se busca por tempo o no.
+char es_tempo = '0' ;
+
 //--- Funciones de impresión ---//
 
 // Solo imprime gatitos.
@@ -119,9 +125,6 @@ void cargarCanciones(char** lineaCSV, Map* Mapa) {
   agregarAlMapa(pair->value, Cancion->categoriaTempo, Cancion) ;
 }
 
-// Variable global encargada de verificar si es que, al buscar por filtro, se busca por tempo o no.
-char es_tempo = '0' ;
-
 MapPair* devolverPairFiltro(Map* Mapa) {
   //---//
   MapPair* pair ;
@@ -173,22 +176,19 @@ void music_buscarPorFiltro(Map* Mapa, const char* str) {
 
 //--- Funciones Principales ---//
 
-// Variable global que verifica si es que se han cargado las canciones
-char verificar_cargado = '0' ;
-
 void music_cargar(Map* MapaCanciones) {
   if (verificar_cargado == '1') { puts("YA SE CARGARON LAS CANCIONES!") ; return ; }
-  //---//
+  //--- IMPRESIÓN ---//
   limpiarPantalla() ;
   imprimirSeparador("Por favor, ingrese la ruta donde se ubica el archivo de canciones:") ;
   puts("Si trabaja con el repositorio, puede usar la ruta \"Data/song_dataset_.csv\"\n") ;
   printf("Ingrese la ruta del archivo con canciones, sin comillas: ") ;
-  //---//
+  //-----------------//
   char buffer[100] ;
   leerEntrada(buffer) ;
   FILE* archivoCSV = fopen(buffer, "r") ;
   if (archivoCSV == NULL) { perror("La ruta proporcionada no es válida") ; return ; }
-  //---//
+  //--- IMPRESIÓN ---//
   limpiarPantalla() ;
   imprimirSeparador("Se cargarán las primeras 10.000 canciones. ¿Desea seguir? [SI/NO]") ;
   leerOpcion(buffer) ;
@@ -197,7 +197,7 @@ void music_cargar(Map* MapaCanciones) {
   limpiarPantalla() ;
   imprimirSeparador("Cargando canciones...") ;
   imprimirGato() ;
-  //---//
+  //-----------------//
   
   int i = 0 ;
   //---//
@@ -209,14 +209,14 @@ void music_cargar(Map* MapaCanciones) {
   //---//
   if (i == 10000) {
     verificar_cargado = '1' ;
-    //---//
+    //--- IMPRESIÓN ---//
     puts("SE CARGARON LAS PRIMERAS 10.000 CANCIONES.") ;
     esperarEnter() ;
     limpiarPantalla() ;
     imprimirSeparador("¿Desea leer todas las canciones disponibles? [S/N]") ;
     puts("Si acepta, cargará todas las canciones disponibles (puede tardar un rato).") ;
     puts("Si no, estarán cargadas las primeras 10.000 canciones.") ;
-    //---//
+    //-----------------//
     leerOpcion(buffer) ;
     limpiarPantalla() ;
     if ((*buffer != 'S' && *buffer != 's') || *buffer == '0') { 
@@ -227,7 +227,7 @@ void music_cargar(Map* MapaCanciones) {
     imprimirGato() ;
 
     while ((completo = leerLineaCSV(archivoCSV, ',')) != NULL) cargarCanciones(completo, MapaCanciones) ;
-    //---//
+    //-----------------//
     limpiarPantalla() ;
     imprimirSeparador("SE HAN CARGADO TODAS LAS CANCIONES DISPONIBLES.") ;
   }

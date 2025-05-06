@@ -20,7 +20,6 @@ Una forma alternativa de compilación, dentro de **Windows**, sería:
 4. Ejecutar el comando: `gcc TDAs/*.c *.c -o programa.exe`.
 5. Abrir el archivo `programa.exe` o escribir en la misma **terminal** el comando `./programa.exe` para ejecutarlo (si lo permite).
 
-
 ### Funciones del programa
 El programa incluye **2 funciones principales** con las que opera.
 1. `Cargar Canciones`: Permite que el usuario ingrese una ruta (``"C:/..."``, ``"\home\..."``) dentro del programa que contenga el archivo de canciones a utilizar (el proporcionado) en formato CSV. Da la opción de ingresar la ruta proporcionada por el repositorio, pero permite elegir **cualquier ruta y nombre** en el archivo (mientras sea válido).

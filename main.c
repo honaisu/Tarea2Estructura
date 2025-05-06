@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Caso de Opciones
 void casosDeOpciones(char* o, Map* mapa) {
     leerOpcion(o) ;
     switch (*o) {
@@ -52,6 +53,7 @@ void guardarMapa(Map* mapa, char* key) {
     map_insert(mapa, key, lista) ;
 }
 
+// Elegir las Opciones (guarda también los mapas y los limpia al finalizar)
 void elegirOpciones() {
     char opcion ;
     Map* MapaCanciones = map_create(is_equal_str) ;
