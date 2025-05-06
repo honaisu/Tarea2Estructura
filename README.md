@@ -34,3 +34,7 @@ El programa incluye **2 funciones principales** con las que opera.
 - Si se **supera** el límite de la entrada del usuario (**200 carácteres máximo**), el programa no podrá interpretar más allá de lo que se ingrese.
 - Después de usar la función de `Cargar Canciones`, no se podrá leer nuevamente la entrada (para poder por ejemplo cargar las canciones restantes si la opción utilizada es la de cargar las primeras 10.000).
 - Hay ciertos **carácteres especiales** pertenecientes a un formato distinto de ASCII que no son mostrados correctamente dentro del programa.
+
+### Ejemplos
+
+![](Ejemplos/1_cargar_canciones.mp4)
