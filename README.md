@@ -35,6 +35,8 @@ El programa incluye **2 funciones principales** con las que opera.
 - Después de usar la función de `Cargar Canciones`, no se podrá leer nuevamente la entrada (para poder por ejemplo cargar las canciones restantes si la opción utilizada es la de cargar las primeras 10.000).
 - Hay ciertos **carácteres especiales** pertenecientes a un formato distinto de ASCII que no son mostrados correctamente dentro del programa.
 
-### Ejemplos
+### Ejemplos de ejecución
 
-![](Ejemplos/1_cargar_canciones.mp4)
+1. Función `Cargar Canciones`:
+https://github.com/user-attachments/assets/1b5bf513-77ad-4ff3-bb54-7f12d850e360
+
