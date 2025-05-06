@@ -223,7 +223,7 @@ void music_cargar(Map* MapaCanciones) {
   if (archivoCSV == NULL) { perror("La ruta proporcionada no es válida") ; return ; }
   //--- IMPRESIÓN ---//
   limpiarPantalla() ;
-  imprimirSeparador("Se cargarán las primeras 10.000 canciones. ¿Desea seguir? [SI/NO]") ;
+  imprimirSeparador("Se cargarán las primeras 10.000 canciones. ¿Desea seguir? [S/N]") ;
   leerOpcion(buffer) ;
   if (*buffer == '\0') puts("Introduzca una opción válida.") ;
   else if ((*buffer != 'S' && *buffer != 's' && *buffer != '1') || *buffer == '0') return ;
