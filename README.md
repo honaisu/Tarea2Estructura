@@ -41,3 +41,15 @@ El programa incluye **2 funciones principales** con las que opera.
 
 https://github.com/user-attachments/assets/1b5bf513-77ad-4ff3-bb54-7f12d850e360
 
+2. Función `Buscar por Género`:
+
+https://github.com/user-attachments/assets/c2df15c4-0698-4616-822e-c94013227072
+
+3. Función `Buscar por Artista`:
+
+https://github.com/user-attachments/assets/277d096c-c810-4aec-81e7-eb20d500ac27
+
+4. Función `Buscar por Tempo`:
+
+https://github.com/user-attachments/assets/728cb786-bc47-42a9-b067-488a6a86b597
+
