@@ -4,11 +4,10 @@
 **Spotifind** es una herramienta que permite **cargar una base de datos** de canciones, a partir de una ruta especificada por el usuario, y **mostrar los datos de las canciones**, ubicadas dentro, a través de una **búsqueda por filtros** (`Género`, `Artista` y `Tempo`).
 
 ### Requerimientos
-- Tener instalado **Visual Studio Code**, junto con la extensión C/C++ de Microsoft.
 - Tener un compilador de C (como **gcc**) instalado. Para **Windows**, es recomendable utilizar **MinGW**.
 
 ### Compilación y ejecución
-Para compilarlo, dentro del sistema operativo **Windows**, es necesario:
+Para compilarlo, dentro del sistema operativo **Windows** usando **Visual Studio Code**, es necesario:
 1. Descargar este **repositorio** como archivo `zip` (haciendo **click** en la sección `code`, y apretando el botón de `Descargar ZIP`).
 2. Abrir el **explorador de archivos** y navegar hasta el archivo `zip` para descomprimirlo. Una vez descomprimido, abrir el directorio con los archivos del programa.
 3. Abrir el archivo `main.c` del `zip` en **Visual Studio Code**.
