@@ -4,7 +4,9 @@
 **Spotifind** es una herramienta que permite **cargar una base de datos** de canciones, a partir de una ruta especificada por el usuario, y **mostrar los datos de las canciones**, ubicadas dentro, a través de una **búsqueda por filtros** (`Género`, `Artista` y `Tempo`).
 
 ### Requerimientos
-- Tener un compilador de C (como **gcc**) instalado. Para **Windows**, es recomendable utilizar **MinGW**.
+- Tener un compilador de C (como **gcc**) instalado.
+    - Para **Windows**, es recomendable utilizar **MinGW**.
+    - Para sistemas basados en **Arch Linux**, se puede ejecutar en la terminal el comando `sudo pacman -S gcc` para instalarlo del **repositorio oficial** de Arch.
 
 ### Compilación y ejecución
 Para compilarlo, dentro del sistema operativo **Windows** usando **Visual Studio Code**, es necesario:
